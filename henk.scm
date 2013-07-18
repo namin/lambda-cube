@@ -36,15 +36,13 @@
      ((app ,f ,a)
       (let ((tf (typ g f))
             (ta (typ g a)))
-        (printf "f is ~a tf is ~a\n" f tf)
         (and tf ta
              (pmatch
               tf
               ((pi (,x ,tx) ,tb)
                (and (eqbeta tx ta)
                     (substi tb x a)))
-              ;(else #f)
-              ))))
+              (else #f)))))
      ;;; LAM
      ((lambda (,x ,tx) ,b)
       (let ((tb (typ (env-extend g x tx) b)))
@@ -58,8 +56,7 @@
              (t (redtyp (env-extend g x tx) tb)))
         (and (to s t)
              t)))
-     ;(else #f)
-     )))
+     (else #f))))
 
 (define redtyp
   (lambda (g e)
